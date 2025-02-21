@@ -33,24 +33,24 @@ class HomeController with ChangeNotifier{
   }
 
   void generateMatrix(){
-    RegExp regExp = RegExp(r'\[[^\[\]]*\]');
-    List<String> valuesOfMatrix= regExp.allMatches(textEditingControllerInput.text).map((match) => match.group(0)!).toList();
+    //RegExp regExp = RegExp(r'\[[^\[\]]*\]');
+    //List<String> valuesOfMatrix= regExp.allMatches(textEditingControllerInput.text).map((match) => match.group(0)!).toList();
     RegExp regExpOnlyNumbers = RegExp(r'\d+'); // Busca uno o más dígitos
     List<int>  valuesOnlyNumbers = regExpOnlyNumbers.allMatches(textEditingControllerInput.text).map((match) => int.parse(match.group(0)!)).toList();
     debugPrint("vlues int: $valuesOnlyNumbers");
 
     int n = sqrt(valuesOnlyNumbers.length).toInt();
+    matrixOfNumbers =List.generate(n, (_) => List.filled(n, 0));
     int index = 0; 
     
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < n; j++) {
-        matrixOfNumbers[i][j] = valuesOnlyNumbers[index++]; // Asigna el producto de fila x columna
+        matrixOfNumbers[i][j] = valuesOnlyNumbers[index];
+        index++; // Asigna el producto de fila x columna
       }
     }
-
-    for (var row in matrixOfNumbers) {
-      debugPrint(row.toString());
-    }
+    cantValuesOfMatriz = n;
+    notifyListeners();
   }
   
 }
