@@ -6,7 +6,7 @@ class HomeController with ChangeNotifier{
   int _cantValuesOfMatriz  = 0; 
   TextEditingController _textEditingControllerInput = TextEditingController(); 
   List<List<int>> _matrixOfNumbers = [];
-  List<List<int>> _matrixOfNumbersOutPut = [];
+  List<int> _matrixOfNumbersOutPut = [];
 
   int get cantValuesOfMatriz => _cantValuesOfMatriz;
   set cantValuesOfMatriz ( int value){
@@ -20,8 +20,8 @@ class HomeController with ChangeNotifier{
    notifyListeners();
   }
 
-  List<List<int>> get matrixOfNumbersOutPut => _matrixOfNumbersOutPut;
-  set matrixOfNumbersOutPut ( List<List<int>> value){
+  List<int> get matrixOfNumbersOutPut => _matrixOfNumbersOutPut;
+  set matrixOfNumbersOutPut ( List<int> value){
    _matrixOfNumbersOutPut = value;
    notifyListeners();
   }
@@ -33,23 +33,29 @@ class HomeController with ChangeNotifier{
   }
 
   void generateMatrix(){
-    //RegExp regExp = RegExp(r'\[[^\[\]]*\]');
-    //List<String> valuesOfMatrix= regExp.allMatches(textEditingControllerInput.text).map((match) => match.group(0)!).toList();
+
     RegExp regExpOnlyNumbers = RegExp(r'\d+'); // Busca uno o más dígitos
     List<int>  valuesOnlyNumbers = regExpOnlyNumbers.allMatches(textEditingControllerInput.text).map((match) => int.parse(match.group(0)!)).toList();
-    debugPrint("vlues int: $valuesOnlyNumbers");
 
-    int n = sqrt(valuesOnlyNumbers.length).toInt();
-    matrixOfNumbers =List.generate(n, (_) => List.filled(n, 0));
+    int cantOfValues = sqrt(valuesOnlyNumbers.length).toInt();
+    matrixOfNumbers =List.generate(cantOfValues, (_) => List.filled(cantOfValues, 0));
     int index = 0; 
     
-    for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
-        matrixOfNumbers[i][j] = valuesOnlyNumbers[index];
-        index++; // Asigna el producto de fila x columna
+    for (int i = 0; i < cantOfValues; i++) {
+      for (int j = 0; j < cantOfValues; j++) {
+        matrixOfNumbers[i][j] = valuesOnlyNumbers[index++];
       }
     }
-    cantValuesOfMatriz = n;
+    List<List<int>> newMatrixRotate = List.generate(cantOfValues, (_) => List.filled(cantOfValues, 0));
+    // Reordenar la matriz
+    for (int i = 0; i < cantOfValues; i++) {
+      for (int j = 0; j < cantOfValues; j++) {
+        debugPrint("newMatrixRotate[i][j]: ${newMatrixRotate[i][j]}");
+        newMatrixRotate[i][j] = matrixOfNumbers[j][cantOfValues - 1 - i];
+      }
+    }
+    cantValuesOfMatriz = cantOfValues;
+    matrixOfNumbersOutPut = newMatrixRotate.expand((row) => row).toList();
     notifyListeners();
   }
   
