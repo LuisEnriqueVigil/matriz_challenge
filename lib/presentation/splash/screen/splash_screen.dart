@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test_delosi_app/common/theme/font_size.dart';
-import 'package:test_delosi_app/common/widgets/text_widget_app.dart';
 import 'package:test_delosi_app/domain/controllers/splash_controller.dart';
+import 'package:test_delosi_app/presentation/splash/widgets/label_welcome_splash_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,12 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextWidgetApp(
-              text: "Bienvenido Delosi App", 
-              fontSize: FontSizeApp.fontSize24, 
-              fontWeight: FontWeight.bold, 
-              colorText: Colors.black
-            ),
+            LabelWelcomeSplashWidget(),
             const SizedBox(height: 20.0),
             CircularProgressIndicator(
               color: Colors.blue,
@@ -49,3 +43,4 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+

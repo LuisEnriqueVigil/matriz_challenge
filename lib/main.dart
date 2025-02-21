@@ -11,7 +11,6 @@ void main() {
       providers: [
          ChangeNotifierProvider(create: (_)=> SplashController()),
          ChangeNotifierProvider(create: (_)=> HomeController()),
-
       ],
       
     child: MyApp()
@@ -25,7 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      debugShowCheckedModeBanner: false,
+      title: 'Delosi app',
       routes: RoutesApp.routesDefine,
       initialRoute: RoutesName.splash,
     );
